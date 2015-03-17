@@ -10,9 +10,13 @@ static:  libstatic main.o
 	 g++ main.o -L . -o $(BIN)  -l$(LIB) 
 	 @echo "Linking is done..."
 
+multilib: $(OBJs) main.o
+	 @ar rcs  libComplex.a somma.o 
+	 @ar rcs  libMult.a mult.o 
+	 @ar rcs libComplex.a libMult.a  
+	 @g++ -L$(CURDIR)  -o $(BIN) main.o -lComplex
 
-
-libshared: $(OBJs)
+libshared: $(OBJs) 
 	@g++  -shared -Wl,-soname, -o lib$(LIB).so $(OBJs) -lc
 	@echo "Shared library is done..."
 
